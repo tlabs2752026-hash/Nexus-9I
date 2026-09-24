@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Nexus 9I | Login</title>
+
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blue: #315eba;
+            --dark-blue: #17284d;
+            --light-blue: #eef4ff;
+            --border: #dfe6f2;
+            --text: #172033;
+            --muted: #6d7890;
+            --white: #ffffff;
+            --danger: #d93025;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Inter", sans-serif;
+            background: #f5f7fb;
+            color: var(--text);
+        }
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .page {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+        }
+
+        /* =========================
+           LEFT SIDE
+        ========================= */
+
+        .visual {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            background-image:
+                linear-gradient(
+                    90deg,
+                    rgba(15, 31, 66, 0.88),
+                    rgba(23, 40, 77, 0.48),
+                    rgba(23, 40, 77, 0.08)
+                ),
+                url("group.jpeg");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .visual-content {
+            position: absolute;
+            left: 8%;
+            bottom: 10%;
+            max-width: 650px;
+            color: white;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            padding: 8px 13px;
+            margin-bottom: 18px;
+
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 999px;
+
+            background: rgba(255,255,255,0.10);
+            backdrop-filter: blur(8px);
+
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+        }
+
+        .visual h1 {
+            font-size: clamp(42px, 5vw, 72px);
+            line-height: 0.98;
+            letter-spacing: -0.055em;
+            margin-bottom: 22px;
+        }
+
+        .visual p {
+            max-width: 520px;
+            font-size: 16px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.82);
+        }
+
+        /* =========================
+           RIGHT SIDE
+        ========================= */
+
+        .login-side {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 40px;
+
+            background: white;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 430px;
+        }
+
+        /* =========================
+           BRAND
+        ========================= */
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 42px;
+        }
+
+        .brand img {
+            width: 46px;
+            height: 46px;
+            object-fit: contain;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--dark-blue);
+        }
+
+        .brand-subtitle {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        /* =========================
+           HEADING
+        ========================= */
+
+        .login-box h2 {
+            font-size: 34px;
+            line-height: 1.1;
+            letter-spacing: -0.04em;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* =========================
+           ROLE SELECTOR
+        ========================= */
+
+        .role-label {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .roles {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .role-button {
+            border: 1px solid var(--border);
+            background: white;
+
+            padding: 12px 8px;
+
+            border-radius: 10px;
+
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+
+            color: var(--muted);
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .role-button:hover {
+            border-color: #b9c9e9;
+            transform: translateY(-1px);
+        }
+
+        .role-button.active {
+            background: var(--light-blue);
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            height: 50px;
+
+            border: 1px solid var(--border);
+            border-radius: 11px;
+
+            padding: 0 14px;
+
+            outline: none;
+
+            font-family: inherit;
+            font-size: 14px;
+
+            color: var(--text);
+            background: white;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        input:focus {
+            border-color: var(--blue);
+
+            box-shadow:
+                0 0 0 4px rgba(49, 94, 186, 0.10);
+        }
+
+        input::placeholder {
+            color: #a1a9b8;
+        }
+
+        /* =========================
+           PASSWORD
+        ========================= */
+
+        .password-input {
+            padding-right: 48px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+
+            border: none;
+            background: transparent;
+
+            color: var(--muted);
+
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .toggle-password:hover {
+            color: var(--blue);
+        }
+
+        /* =========================
+           OPTIONS
+        ========================= */
+
+        .options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin: 4px 0 24px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .remember input {
+            width: 15px;
+            height: 15px;
+            accent-color: var(--blue);
+        }
+
+        .forgot {
+            border: none;
+            background: transparent;
+
+            color: var(--blue);
+
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        /* =========================
+           LOGIN BUTTON
+        ========================= */
+
+        .login-button {
+            width: 100%;
+            height: 52px;
+
+            border: none;
+            border-radius: 11px;
+
+            background: var(--dark-blue);
+            color: white;
+
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .login-button:hover {
+            background: #223b70;
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 8px 20px rgba(23, 40, 77, 0.18);
+        }
+
+        .login-button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* =========================
+           MESSAGE
+        ========================= */
+
+        .message {
+            display: none;
+
+            margin-top: 17px;
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .message.error {
+            display: block;
+
+            color: var(--danger);
+            background: #fff2f1;
+            border: 1px solid #ffd5d1;
+        }
+
+        .message.success {
+            display: block;
+
+            color: #147a43;
+            background: #effaf4;
+            border: 1px solid #c9efd9;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            margin-top: 34px;
+
+            text-align: center;
+
+            color: #9aa3b2;
+
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+            .page {
+                grid-template-columns: 1fr;
+            }
+
+            .visual {
+                min-height: 280px;
+            }
+
+            .visual-content {
+                left: 7%;
+                right: 7%;
+                bottom: 12%;
+            }
+
+            .visual h1 {
+                font-size: 42px;
+            }
+
+            .visual p {
+                display: none;
+            }
+
+            .login-side {
+                min-height: auto;
+                padding: 45px 25px;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .login-side {
+                padding: 35px 20px;
+            }
+
+            .login-box h2 {
+                font-size: 29px;
+            }
+
+            .roles {
+                gap: 6px;
+            }
+
+            .role-button {
+                font-size: 12px;
+                padding: 11px 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- =========================
+         LEFT VISUAL
+    ========================== -->
+
+    <section class="visual">
+
+        <div class="visual-content">
+
+            <div class="eyebrow">
+                CLASS 9I • NEXUS PORTAL
+            </div>
+
+            <h1>
+                One portal<br>
+                for the 9I.
+            </h1>
+
+            <p>
+                A connected digital space for students,
+                teachers and administrators of Class 9I.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         LOGIN
+    ========================== -->
+
+    <section class="login-side">
+
+        <div class="login-box">
+
+            <!-- BRAND -->
+
+            <div class="brand">
+
+                <img
+                    src="logo.png"
+                    alt="Nexus 9I logo"
+                >
+
+                <div class="brand-text">
+
+                    <div class="brand-name">
+                        Nexus 9I
+                    </div>
+
+                    <div class="brand-subtitle">
+                        Class 9I Portal
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- HEADING -->
+
+            <h2>
+                Welcome back.
+            </h2>
+
+            <p class="description">
+                Sign in using your Nexus 9I User ID.
+            </p>
+
+
+            <!-- ROLE -->
+
+            <div class="role-label">
+                Select your role
+            </div>
+
+            <div class="roles">
+
+                <button
+                    type="button"
+                    class="role-button active"
+                    data-role="student"
+                >
+                    Student
+                </button>
+
+                <button
+                    type="button"
+                    class="role-button"
+                    data-role="teacher"
+                >
+                    Teacher
+                </button>
+
+                <button
+                    type="button"
+                    class="role-button"
+                    data-role="admin"
+                >
+                    Admin
+                </button>
+
+            </div>
+
+
+            <!-- FORM -->
+
+            <form id="loginForm">
+
+                <!-- USER ID -->
+
+                <div class="form-group">
+
+                    <label for="userId">
+                        User ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="userId"
+                        name="userId"
+                        placeholder="Enter your User ID"
+                        autocomplete="username"
+                        autocapitalize="characters"
+                        spellcheck="false"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="password-input"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="togglePassword"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- OPTIONS -->
+
+                <div class="options">
+
+                    <label class="remember">
+
+                        <input
+                            type="checkbox"
+                            id="remember"
+                        >
+
+                        Remember me
+
+                    </label>
+
+                    <button
+                        type="button"
+                        class="forgot"
+                        id="forgotPassword"
+                    >
+                        Forgot password?
+                    </button>
+
+                </div>
+
+
+                <!-- LOGIN -->
+
+                <button
+                    type="submit"
+                    class="login-button"
+                    id="loginButton"
+                >
+                    Sign In
+                </button>
+
+            </form>
+
+
+            <!-- MESSAGE -->
+
+            <div
+                class="message"
+                id="message"
+            ></div>
+
+
+            <!-- FOOTER -->
+
+            <div class="footer">
+                © 2026 Nexus 9I • Class 9I Portal
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script>
+
+    /* =========================
+       VARIABLES
+    ========================== */
+
+    let selectedRole = "student";
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const userIdInput =
+        document.getElementById("userId");
+
+    const passwordInput =
+        document.getElementById("password");
+
+    const loginButton =
+        document.getElementById("loginButton");
+
+    const message =
+        document.getElementById("message");
+
+    const togglePassword =
+        document.getElementById("togglePassword");
+
+    const forgotPassword =
+        document.getElementById("forgotPassword");
+
+    const roleButtons =
+        document.querySelectorAll(".role-button");
+
+
+    /* =========================
+       ROLE SELECTION
+    ========================== */
+
+    roleButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            roleButtons.forEach(item => {
+                item.classList.remove("active");
+            });
+
+            button.classList.add("active");
+
+            selectedRole =
+                button.dataset.role;
+
+            clearMessage();
+
+            userIdInput.value = "";
+            passwordInput.value = "";
+
+            userIdInput.focus();
+
+        });
+
+    });
+
+
+    /* =========================
+       PASSWORD VISIBILITY
+    ========================== */
+
+    togglePassword.addEventListener(
+        "click",
+        () => {
+
+            if (
+                passwordInput.type === "password"
+            ) {
+
+                passwordInput.type = "text";
+
+                togglePassword.textContent =
+                    "Hide";
+
+            } else {
+
+                passwordInput.type = "password";
+
+                togglePassword.textContent =
+                    "Show";
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       MESSAGE
+    ========================== */
+
+    function showMessage(
+        text,
+        type = "error"
+    ) {
+
+        message.textContent = text;
+
+        message.className =
+            `message ${type}`;
+
+    }
+
+
+    function clearMessage() {
+
+        message.textContent = "";
+
+        message.className = "message";
+
+    }
+
+
+    /* =========================
+       LOGIN
+    ========================== */
+
+    loginForm.addEventListener(
+        "submit",
+        async (event) => {
+
+            event.preventDefault();
+
+            clearMessage();
+
+            const userId =
+                userIdInput.value
+                    .trim()
+                    .toUpperCase();
+
+            const password =
+                passwordInput.value;
+
+            if (!userId) {
+
+                showMessage(
+                    "Please enter your User ID."
+                );
+
+                userIdInput.focus();
+
+                return;
+            }
+
+            if (!password) {
+
+                showMessage(
+                    "Please enter your password."
+                );
+
+                passwordInput.focus();
+
+                return;
+            }
+
+
+            /* Disable button */
+
+            loginButton.disabled = true;
+
+            loginButton.textContent =
+                "Signing in...";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/auth/login",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                userId: userId,
+
+                                password: password,
+
+                                role: selectedRole
+
+                            })
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok || !data.success) {
+
+                    throw new Error(
+                        data.message ||
+                        "Login failed."
+                    );
+
+                }
+
+
+                /*
+                 * Clear old authentication data.
+                 */
+
+                localStorage.removeItem(
+                    "nexusToken"
+                );
+
+                localStorage.removeItem(
+                    "nexusUser"
+                );
+
+                sessionStorage.removeItem(
+                    "nexusToken"
+                );
+
+                sessionStorage.removeItem(
+                    "nexusUser"
+                );
+
+
+                /*
+                 * Store according to
+                 * Remember me.
+                 */
+
+                const storage =
+                    document.getElementById(
+                        "remember"
+                    ).checked
+                        ? localStorage
+                        : sessionStorage;
+
+
+                storage.setItem(
+                    "nexusToken",
+                    data.token
+                );
+
+                storage.setItem(
+                    "nexusUser",
+                    JSON.stringify(data.user)
+                );
+
+
+                showMessage(
+                    "Login successful. Opening your portal...",
+                    "success"
+                );
+
+
+                /*
+                 * Redirect based on role.
+                 */
+
+                setTimeout(() => {
+
+                    if (
+                        data.user.role ===
+                        "student"
+                    ) {
+
+                        window.location.href =
+                            "/student.html";
+
+                    } else if (
+                        data.user.role ===
+                        "teacher"
+                    ) {
+
+                        window.location.href =
+                            "/teacher.html";
+
+                    } else if (
+                        data.user.role ===
+                        "admin"
+                    ) {
+
+                        window.location.href =
+                            "/admin.html";
+
+                    } else {
+
+                        showMessage(
+                            "Unknown account role."
+                        );
+
+                    }
+
+                }, 500);
+
+
+            } catch (error) {
+
+                console.error(
+                    "Login error:",
+                    error
+                );
+
+                showMessage(
+                    error.message ||
+                    "Unable to connect to the server."
+                );
+
+                loginButton.disabled = false;
+
+                loginButton.textContent =
+                    "Sign In";
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       FORGOT PASSWORD
+    ========================== */
+
+    forgotPassword.addEventListener(
+        "click",
+        () => {
+
+            showMessage(
+                "Please contact a Nexus 9I administrator to reset your password."
+            );
+
+        }
+    );
+
+
+    /* =========================
+       ENTER KEY / USER ID
+    ========================== */
+
+    userIdInput.addEventListener(
+        "input",
+        () => {
+
+            userIdInput.value =
+                userIdInput.value
+                    .toUpperCase();
+
+        }
+    );
+
+
+    /* =========================
+       AUTO FOCUS
+    ========================== */
+
+    window.addEventListener(
+        "load",
+        () => {
+
+            userIdInput.focus();
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

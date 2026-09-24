@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus 9I — Admin</title>
+    <link rel="icon" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:"Inter",sans-serif;background:#f5f7fb;color:#17284d;min-height:100vh}
+        header{height:76px;background:#fff;border-bottom:1px solid #e7ebf3;display:flex;align-items:center;justify-content:space-between;padding:0 6%}
+        .brand{display:flex;align-items:center;gap:12px}
+        .brand img{width:42px;height:42px;object-fit:contain}
+        .brand h2{font-size:20px;font-weight:800}
+        .brand p{font-size:11px;color:#7b8498;margin-top:2px}
+        .role{font-size:13px;font-weight:600;color:#315eba;background:#edf3ff;padding:9px 14px;border-radius:20px}
+        main{width:min(1200px,92%);margin:32px auto 60px}
+        .welcome{background:linear-gradient(135deg,#315eba,#17284d);border-radius:24px;padding:35px;color:#fff;box-shadow:0 15px 35px rgba(23,40,77,.15)}
+        .welcome small{font-size:12px;font-weight:700;letter-spacing:1px;opacity:.75;text-transform:uppercase}
+        .welcome h1{margin-top:9px;font-size:clamp(28px,5vw,40px)}
+        .welcome p{margin-top:10px;font-size:13px;opacity:.82;line-height:1.6}
+        .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
+        .stat{background:#fff;border:1px solid #e7ebf3;border-radius:16px;padding:18px}
+        .stat strong{display:block;font-size:25px}
+        .stat span{font-size:11px;color:#8992a5}
+        .section{margin-top:28px}
+        .section-title{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:14px}
+        .section-title h2{font-size:19px}
+        .section-title span{font-size:11px;color:#8992a5}
+        .panel,.list{background:#fff;border:1px solid #e7ebf3;border-radius:18px;padding:20px}
+        .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+        .full{grid-column:1/-1}
+        .field{display:flex;flex-direction:column;gap:6px}
+        label{font-size:12px;font-weight:700;color:#536079}
+        input,textarea,select{width:100%;border:1px solid #dfe4ed;border-radius:11px;padding:11px 12px;font-family:inherit;font-size:13px;outline:none;background:#fff}
+        input:focus,textarea:focus,select:focus{border-color:#315eba}
+        textarea{min-height:105px;resize:vertical}
+        .button-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+        button{border:0;border-radius:10px;padding:10px 15px;font-family:inherit;font-weight:700;cursor:pointer}
+        .primary{background:#315eba;color:#fff}
+        .primary:hover{background:#274d9d}
+        .secondary{background:#edf3ff;color:#315eba}
+        .danger{background:#fff0ef;color:#b42318}
+        button:disabled{opacity:.6;cursor:not-allowed}
+        .message{display:none;margin-top:11px;padding:10px 12px;border-radius:9px;font-size:12px}
+        .success{display:block;background:#ecfdf3;color:#067647}
+        .failure{display:block;background:#fef3f2;color:#b42318}
+        .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:13px}
+        .toolbar input{flex:1;min-width:200px}
+        .table-wrap{overflow-x:auto}
+        table{width:100%;border-collapse:collapse;min-width:680px}
+        th,td{text-align:left;padding:12px;border-bottom:1px solid #edf0f5;font-size:12px}
+        th{color:#7b8498;font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+        td strong{font-size:12px}
+        .badge{display:inline-block;background:#edf3ff;color:#315eba;border-radius:7px;padding:4px 7px;font-size:10px;font-weight:700}
+        .list-item{padding:16px 0;border-bottom:1px solid #edf0f5}
+        .list-item:last-child{border-bottom:0}
+        .item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:15px}
+        .list-item h3{font-size:15px;margin-bottom:6px}
+        .list-item p{font-size:12px;color:#687286;line-height:1.55}
+        .meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+        .meta span{font-size:10px;background:#edf3ff;color:#315eba;padding:4px 7px;border-radius:6px;font-weight:600}
+        .empty{text-align:center;padding:24px;color:#8a92a3;font-size:12px}
+        .error{color:#b42318}
+        footer{text-align:center;color:#9aa2b2;font-size:11px;padding:25px}
+        @media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:650px){header{padding:0 5%}main{width:92%}.welcome{padding:27px}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.item-top{flex-direction:column}}
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="brand">
+        <img src="logo.png" alt="Nexus 9I">
+        <div>
+            <h2>Nexus 9I</h2>
+            <p>Class 9I Portal</p>
+        </div>
+    </div>
+    <div class="role">Admin</div>
+</header>
+
+<main>
+    <section class="welcome">
+        <small>Administration</small>
+        <h1 id="welcomeName">Namaste!</h1>
+        <p>Manage Class 9I users, announcements and examinations from one place.</p>
+    </section>
+
+    <section class="stats">
+        <div class="stat"><strong id="studentCount">0</strong><span>Students</span></div>
+        <div class="stat"><strong id="teacherCount">0</strong><span>Teachers</span></div>
+        <div class="stat"><strong id="adminCount">0</strong><span>Admins</span></div>
+        <div class="stat"><strong id="announcementCount">0</strong><span>Announcements</span></div>
+    </section>
+
+    <!-- USERS -->
+    <section class="section">
+        <div class="section-title">
+            <h2>User Management</h2>
+            <span>Add or remove portal users</span>
+        </div>
+
+        <div class="panel">
+            <div class="form-grid">
+                <div class="field">
+                    <label for="userRole">Role</label>
+                    <select id="userRole">
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="userId">User ID</label>
+                    <input id="userId" maxlength="50" placeholder="e.g. S09IABC01">
+                </div>
+
+                <div class="field">
+                    <label for="userName">Name</label>
+                    <input id="userName" maxlength="120" placeholder="Full name">
+                </div>
+
+                <div class="field" id="rollField">
+                    <label for="rollNo">Roll Number</label>
+                    <input id="rollNo" type="number" min="1" placeholder="Roll number">
+                </div>
+
+                <div class="field" id="classField">
+                    <label for="className">Class</label>
+                    <input id="className" value="9I" maxlength="20">
+                </div>
+
+                <div class="field" id="subjectField" style="display:none">
+                    <label for="subject">Subject</label>
+                    <input id="subject" maxlength="100" placeholder="Subject">
+                </div>
+
+                <div class="field">
+                    <label for="password">Initial Password</label>
+                    <input id="password" type="password" minlength="4" placeholder="Password">
+                </div>
+            </div>
+
+            <div class="button-row">
+                <button class="primary" id="addUserButton" type="button">Add User</button>
+                <button class="secondary" id="refreshUsersButton" type="button">Refresh Users</button>
+            </div>
+
+            <div id="userMessage" class="message"></div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-title">
+            <h2>All Users</h2>
+            <span>Admin accounts cannot delete the last admin</span>
+        </div>
+
+        <div class="panel">
+            <div class="toolbar">
+                <input id="userSearch" placeholder="Search by User ID, name, role or subject...">
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Details</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTable">
+                        <tr><td colspan="5" class="empty">Loading users...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ANNOUNCEMENTS -->
+    <section class="section">
+        <div class="section-title">
+            <h2>Create Announcement</h2>
+            <span>Admin can delete any announcement</span>
+        </div>
+
+        <div class="panel">
+            <form id="announcementForm">
+                <div class="form-grid">
+                    <div class="field full">
+                        <label for="announcementTitle">Title</label>
+                        <input id="announcementTitle" maxlength="150" required placeholder="Announcement title">
+                    </div>
+                    <div class="field full">
+                        <label for="announcementText">Message</label>
+                        <textarea id="announcementText" maxlength="2000" required placeholder="Write the announcement..."></textarea>
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button class="primary" id="announcementButton" type="submit">Publish Announcement</button>
+                </div>
+                <div id="announcementMessage" class="message"></div>
+            </form>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-title">
+            <h2>All Announcements</h2>
+            <span>Admin controls</span>
+        </div>
+        <div id="announcements" class="list">
+            <div class="empty">Loading announcements...</div>
+        </div>
+    </section>
+
+    <!-- EXAMS -->
+    <section class="section">
+        <div class="section-title">
+            <h2>Create Exam</h2>
+            <span>Admin can delete any exam</span>
+        </div>
+
+        <div class="panel">
+            <form id="examForm">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="examName">Exam Name</label>
+                        <input id="examName" maxlength="150" required placeholder="e.g. PA-2">
+                    </div>
+                    <div class="field">
+                        <label for="examSubject">Subject</label>
+                        <input id="examSubject" maxlength="100" required placeholder="e.g. Mathematics">
+                    </div>
+                    <div class="field">
+                        <label for="examDate">Date</label>
+                        <input id="examDate" type="date" required>
+                    </div>
+                    <div class="field">
+                        <label for="examTime">Time</label>
+                        <input id="examTime" type="time" required>
+                    </div>
+                    <div class="field">
+                        <label for="maxMarks">Maximum Marks</label>
+                        <input id="maxMarks" type="number" min="1" step="1" required placeholder="e.g. 25">
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button class="primary" id="examButton" type="submit">Create Exam</button>
+                </div>
+                <div id="examMessage" class="message"></div>
+            </form>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-title">
+            <h2>All Exams</h2>
+            <span>Admin controls</span>
+        </div>
+        <div id="exams" class="list">
+            <div class="empty">Loading exams...</div>
+        </div>
+    </section>
+</main>
+
+<footer>© 2026 Nexus 9I • Class 9I Portal</footer>
+
+<script>
+    // ==========================================
+    // AUTH
+    // ==========================================
+
+    const token =
+        localStorage.getItem("nexusToken") ||
+        sessionStorage.getItem("nexusToken");
+
+    const storedUserRaw =
+        localStorage.getItem("nexusUser") ||
+        sessionStorage.getItem("nexusUser");
+
+    let storedUser = {};
+
+    try {
+        storedUser = JSON.parse(storedUserRaw || "{}");
+    } catch {
+        storedUser = {};
+    }
+
+    if (!token) {
+        window.location.href = "/login.html";
+    }
+
+    if (storedUser.role && storedUser.role !== "admin") {
+        if (storedUser.role === "student") {
+            window.location.href = "/student.html";
+        } else if (storedUser.role === "teacher") {
+            window.location.href = "/teacher.html";
+        } else {
+            window.location.href = "/login.html";
+        }
+    }
+
+    document.getElementById("welcomeName").textContent =
+        `Namaste, ${storedUser.name || "Admin"}!`;
+
+    // ==========================================
+    // HELPERS
+    // ==========================================
+
+    function escapeHTML(value) {
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    function authHeaders(extra = {}) {
+        return {
+            ...extra,
+            Authorization: `Bearer ${token}`
+        };
+    }
+
+    function formatDate(value) {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "Date unavailable";
+
+        return date.toLocaleDateString("en-IN", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        });
+    }
+
+    function formatDateTime(value) {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "";
+
+        return date.toLocaleString("en-IN", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+    }
+
+    function showMessage(id, text, success) {
+        const box = document.getElementById(id);
+        box.textContent = text;
+        box.className = `message ${success ? "success" : "failure"}`;
+    }
+
+    function handleAuthFailure() {
+        localStorage.removeItem("nexusToken");
+        localStorage.removeItem("nexusUser");
+        sessionStorage.removeItem("nexusToken");
+        sessionStorage.removeItem("nexusUser");
+        window.location.href = "/login.html";
+    }
+
+    async function readResponse(response) {
+        let data = {};
+
+        try {
+            data = await response.json();
+        } catch {}
+
+        if (response.status === 401 || response.status === 403) {
+            handleAuthFailure();
+            throw new Error("Authentication expired.");
+        }
+
+        if (!response.ok) {
+            throw new Error(data.message || "Request failed.");
+        }
+
+        return data;
+    }
+
+    // ==========================================
+    // USER FORM
+    // ==========================================
+
+    const userRole = document.getElementById("userRole");
+
+    function updateUserForm() {
+        const role = userRole.value;
+
+        document.getElementById("rollField").style.display =
+            role === "student" ? "flex" : "none";
+
+        document.getElementById("classField").style.display =
+            role === "student" ? "flex" : "none";
+
+        document.getElementById("subjectField").style.display =
+            role === "teacher" ? "flex" : "none";
+    }
+
+    userRole.addEventListener("change", updateUserForm);
+    updateUserForm();
+
+    // ==========================================
+    // USERS
+    // ==========================================
+
+    let allUsers = [];
+
+    async function loadUsers() {
+        const tbody = document.getElementById("usersTable");
+
+        try {
+            const response = await fetch(
+                "/api/admin/users",
+                { headers: authHeaders() }
+            );
+
+            const data = await readResponse(response);
+
+            allUsers = Array.isArray(data.users)
+                ? data.users
+                : [];
+
+            renderUsers();
+            updateStats();
+
+        } catch (error) {
+            console.error(error);
+
+            if (error.message !== "Authentication expired.") {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="empty error">
+                            Unable to load users.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+    }
+
+    function renderUsers() {
+        const tbody = document.getElementById("usersTable");
+        const query =
+            document.getElementById("userSearch")
+                .value.trim()
+                .toLowerCase();
+
+        const filtered = allUsers.filter(user => {
+            const text = [
+                user.userId,
+                user.name,
+                user.role,
+                user.subject,
+                user.className,
+                user.rollNo
+            ].join(" ").toLowerCase();
+
+            return text.includes(query);
+        });
+
+        if (!filtered.length) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="empty">
+                        No users found.
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        tbody.innerHTML = filtered.map(user => {
+            const role = String(user.role || "").toLowerCase();
+
+            let details = "—";
+
+            if (role === "student") {
+                details =
+                    `Roll ${escapeHTML(user.rollNo ?? "—")} • ${escapeHTML(user.className || "9I")}`;
+            } else if (role === "teacher") {
+                details =
+                    escapeHTML(user.subject || "—");
+            }
+
+            const isSelf =
+                user.userId === storedUser.userId;
+
+            return `
+                <tr>
+                    <td><strong>${escapeHTML(user.userId)}</strong></td>
+                    <td>${escapeHTML(user.name)}</td>
+                    <td><span class="badge">${escapeHTML(role)}</span></td>
+                    <td>${details}</td>
+                    <td>
+                        ${
+                            isSelf
+                                ? `<span class="badge">Current admin</span>`
+                                : `<button
+                                    class="danger"
+                                    type="button"
+                                    data-user-delete="true"
+                                    data-role="${escapeHTML(role)}"
+                                    data-user-id="${escapeHTML(user.userId)}">
+                                    Delete
+                                   </button>`
+                        }
+                    </td>
+                </tr>
+            `;
+        }).join("");
+    }
+
+    function updateStats() {
+        const count = role =>
+            allUsers.filter(
+                user =>
+                    String(user.role).toLowerCase() === role
+            ).length;
+
+        document.getElementById("studentCount").textContent =
+            count("student");
+
+        document.getElementById("teacherCount").textContent =
+            count("teacher");
+
+        document.getElementById("adminCount").textContent =
+            count("admin");
+    }
+
+    document.getElementById("userSearch")
+        .addEventListener("input", renderUsers);
+
+    document.getElementById("refreshUsersButton")
+        .addEventListener("click", loadUsers);
+
+    document.getElementById("addUserButton")
+        .addEventListener("click", async () => {
+            const button =
+                document.getElementById("addUserButton");
+
+            const role = userRole.value;
+            const userId =
+                document.getElementById("userId").value.trim().toUpperCase();
+            const name =
+                document.getElementById("userName").value.trim();
+            const password =
+                document.getElementById("password").value;
+
+            if (!userId || !name || !password) {
+                showMessage(
+                    "userMessage",
+                    "User ID, name and password are required.",
+                    false
+                );
+                return;
+            }
+
+            const payload = {
+                userId,
+                name,
+                password,
+                role
+            };
+
+            if (role === "student") {
+                const rollNo =
+                    Number(document.getElementById("rollNo").value);
+
+                if (!Number.isFinite(rollNo) || rollNo < 1) {
+                    showMessage(
+                        "userMessage",
+                        "Enter a valid roll number.",
+                        false
+                    );
+                    return;
+                }
+
+                payload.rollNo = rollNo;
+                payload.className =
+                    document.getElementById("className").value.trim() || "9I";
+            }
+
+            if (role === "teacher") {
+                payload.subject =
+                    document.getElementById("subject").value.trim();
+
+                if (!payload.subject) {
+                    showMessage(
+                        "userMessage",
+                        "Enter the teacher's subject.",
+                        false
+                    );
+                    return;
+                }
+            }
+
+            button.disabled = true;
+            button.textContent = "Adding...";
+
+            try {
+                const response = await fetch(
+                    "/api/admin/users",
+                    {
+                        method: "POST",
+                        headers: authHeaders({
+                            "Content-Type": "application/json"
+                        }),
+                        body: JSON.stringify(payload)
+                    }
+                );
+
+                await readResponse(response);
+
+                document.getElementById("userId").value = "";
+                document.getElementById("userName").value = "";
+                document.getElementById("password").value = "";
+                document.getElementById("rollNo").value = "";
+                document.getElementById("subject").value = "";
+
+                showMessage(
+                    "userMessage",
+                    `${role} added successfully.`,
+                    true
+                );
+
+                await loadUsers();
+
+            } catch (error) {
+                if (error.message !== "Authentication expired.") {
+                    showMessage(
+                        "userMessage",
+                        error.message,
+                        false
+                    );
+                }
+            } finally {
+                button.disabled = false;
+                button.textContent = "Add User";
+            }
+        });
+
+    // ==========================================
+    // DELETE USER
+    // ==========================================
+
+    async function deleteUser(role, userId, button) {
+        const confirmed =
+            window.confirm(
+                `Delete ${role} ${userId}?`
+            );
+
+        if (!confirmed) return;
+
+        button.disabled = true;
+        button.textContent = "Deleting...";
+
+        try {
+            const response = await fetch(
+                `/api/admin/users/${encodeURIComponent(role)}/${encodeURIComponent(userId)}`,
+                {
+                    method: "DELETE",
+                    headers: authHeaders()
+                }
+            );
+
+            await readResponse(response);
+
+            await loadUsers();
+
+        } catch (error) {
+            console.error(error);
+
+            if (error.message !== "Authentication expired.") {
+                alert(error.message || "Unable to delete user.");
+                button.disabled = false;
+                button.textContent = "Delete";
+            }
+        }
+    }
+
+    // ==========================================
+    // ANNOUNCEMENTS
+    // ==========================================
+
+    async function loadAnnouncements() {
+        const container =
+            document.getElementById("announcements");
+
+        try {
+            const response = await fetch(
+                "/api/announcements",
+                { headers: authHeaders() }
+            );
+
+            const data = await readResponse(response);
+            const announcements = data.announcements || [];
+
+            document.getElementById("announcementCount").textContent =
+                announcements.length;
+
+            if (!announcements.length) {
+                container.innerHTML =
+                    `<div class="empty">No announcements yet.</div>`;
+                return;
+            }
+
+            container.innerHTML =
+                announcements.map(item => `
+                    <article class="list-item">
+                        <div class="item-top">
+                            <div>
+                                <h3>${escapeHTML(item.title)}</h3>
+                                <p>${escapeHTML(item.message)}</p>
+
+                                <div class="meta">
+                                    <span>${escapeHTML(item.authorName || "Admin")}</span>
+                                    <span>${escapeHTML(item.authorRole || "")}</span>
+                                    <span>${formatDateTime(item.createdAt)}</span>
+                                </div>
+                            </div>
+
+                            <button
+                                class="danger"
+                                type="button"
+                                data-announcement-delete="${escapeHTML(item._id)}">
+                                Delete
+                            </button>
+                        </div>
+                    </article>
+                `).join("");
+
+        } catch (error) {
+            console.error(error);
+
+            if (error.message !== "Authentication expired.") {
+                container.innerHTML =
+                    `<div class="empty error">Unable to load announcements.</div>`;
+            }
+        }
+    }
+
+    document.getElementById("announcementForm")
+        .addEventListener("submit", async event => {
+            event.preventDefault();
+
+            const button =
+                document.getElementById("announcementButton");
+
+            const title =
+                document.getElementById("announcementTitle")
+                    .value.trim();
+
+            const message =
+                document.getElementById("announcementText")
+                    .value.trim();
+
+            if (!title || !message) return;
+
+            button.disabled = true;
+            button.textContent = "Publishing...";
+
+            try {
+                const response = await fetch(
+                    "/api/announcements",
+                    {
+                        method: "POST",
+                        headers: authHeaders({
+                            "Content-Type": "application/json"
+                        }),
+                        body: JSON.stringify({
+                            title,
+                            message
+                        })
+                    }
+                );
+
+                await readResponse(response);
+
+                document.getElementById("announcementForm").reset();
+
+                showMessage(
+                    "announcementMessage",
+                    "Announcement published successfully.",
+                    true
+                );
+
+                await loadAnnouncements();
+
+            } catch (error) {
+                if (error.message !== "Authentication expired.") {
+                    showMessage(
+                        "announcementMessage",
+                        error.message,
+                        false
+                    );
+                }
+            } finally {
+                button.disabled = false;
+                button.textContent = "Publish Announcement";
+            }
+        });
+
+    // ==========================================
+    // EXAMS
+    // ==========================================
+
+    async function loadExams() {
+        const container =
+            document.getElementById("exams");
+
+        try {
+            const response = await fetch(
+                "/api/exams",
+                { headers: authHeaders() }
+            );
+
+            const data = await readResponse(response);
+            const exams = data.exams || [];
+
+            if (!exams.length) {
+                container.innerHTML =
+                    `<div class="empty">No exams scheduled.</div>`;
+                return;
+            }
+
+            container.innerHTML =
+                exams.map(exam => `
+                    <article class="list-item">
+                        <div class="item-top">
+                            <div>
+                                <h3>${escapeHTML(exam.name || "Exam")}</h3>
+                                <p>
+                                    <strong>Subject:</strong>
+                                    ${escapeHTML(exam.subject)}
+                                </p>
+                                <p>
+                                    <strong>Date:</strong>
+                                    ${formatDate(exam.examDate)}
+                                </p>
+                                <p>
+                                    <strong>Time:</strong>
+                                    ${escapeHTML(exam.examTime)}
+                                </p>
+                                <p>
+                                    <strong>Maximum Marks:</strong>
+                                    ${escapeHTML(exam.maxMarks)}
+                                </p>
+
+                                <div class="meta">
+                                    <span>${escapeHTML(exam.createdByName || "Admin")}</span>
+                                </div>
+                            </div>
+
+                            <button
+                                class="danger"
+                                type="button"
+                                data-exam-delete="${escapeHTML(exam._id)}">
+                                Delete
+                            </button>
+                        </div>
+                    </article>
+                `).join("");
+
+        } catch (error) {
+            console.error(error);
+
+            if (error.message !== "Authentication expired.") {
+                container.innerHTML =
+                    `<div class="empty error">Unable to load exams.</div>`;
+            }
+        }
+    }
+
+    document.getElementById("examForm")
+        .addEventListener("submit", async event => {
+            event.preventDefault();
+
+            const button =
+                document.getElementById("examButton");
+
+            const name =
+                document.getElementById("examName").value.trim();
+
+            const subject =
+                document.getElementById("examSubject").value.trim();
+
+            const examDate =
+                document.getElementById("examDate").value;
+
+            const examTime =
+                document.getElementById("examTime").value;
+
+            const maxMarks =
+                Number(document.getElementById("maxMarks").value);
+
+            if (
+                !name ||
+                !subject ||
+                !examDate ||
+                !examTime ||
+                !Number.isFinite(maxMarks) ||
+                maxMarks < 1
+            ) {
+                showMessage(
+                    "examMessage",
+                    "Please fill all exam fields correctly.",
+                    false
+                );
+                return;
+            }
+
+            button.disabled = true;
+            button.textContent = "Creating...";
+
+            try {
+                const response = await fetch(
+                    "/api/exams",
+                    {
+                        method: "POST",
+                        headers: authHeaders({
+                            "Content-Type": "application/json"
+                        }),
+                        body: JSON.stringify({
+                            name,
+                            subject,
+                            examDate,
+                            examTime,
+                            maxMarks
+                        })
+                    }
+                );
+
+                await readResponse(response);
+
+                document.getElementById("examForm").reset();
+
+                showMessage(
+                    "examMessage",
+                    "Exam created successfully.",
+                    true
+                );
+
+                await loadExams();
+
+            } catch (error) {
+                if (error.message !== "Authentication expired.") {
+                    showMessage(
+                        "examMessage",
+                        error.message,
+                        false
+                    );
+                }
+            } finally {
+                button.disabled = false;
+                button.textContent = "Create Exam";
+            }
+        });
+
+    // ==========================================
+    // EVENT DELEGATION
+    // ==========================================
+
+    document.addEventListener("click", event => {
+        const userButton =
+            event.target.closest("[data-user-delete]");
+
+        if (userButton) {
+            deleteUser(
+                userButton.dataset.role,
+                userButton.dataset.userId,
+                userButton
+            );
+            return;
+        }
+
+        const announcementButton =
+            event.target.closest("[data-announcement-delete]");
+
+        if (announcementButton) {
+            deleteAnnouncement(
+                announcementButton.dataset.announcementDelete,
+                announcementButton
+            );
+            return;
+        }
+
+        const examButton =
+            event.target.closest("[data-exam-delete]");
+
+        if (examButton) {
+            deleteExam(
+                examButton.dataset.examDelete,
+                examButton
+            );
+        }
+    });
+
+    async function deleteAnnouncement(id, button) {
+        if (!window.confirm("Delete this announcement?")) return;
+
+        button.disabled = true;
+        button.textContent = "Deleting...";
+
+        try {
+            const response = await fetch(
+                `/api/announcements/${encodeURIComponent(id)}`,
+                {
+                    method: "DELETE",
+                    headers: authHeaders()
+                }
+            );
+
+            await readResponse(response);
+            await loadAnnouncements();
+
+        } catch (error) {
+            if (error.message !== "Authentication expired.") {
+                alert(error.message || "Unable to delete announcement.");
+                button.disabled = false;
+                button.textContent = "Delete";
+            }
+        }
+    }
+
+    async function deleteExam(id, button) {
+        if (!window.confirm("Delete this exam?")) return;
+
+        button.disabled = true;
+        button.textContent = "Deleting...";
+
+        try {
+            const response = await fetch(
+                `/api/exams/${encodeURIComponent(id)}`,
+                {
+                    method: "DELETE",
+                    headers: authHeaders()
+                }
+            );
+
+            await readResponse(response);
+            await loadExams();
+
+        } catch (error) {
+            if (error.message !== "Authentication expired.") {
+                alert(error.message || "Unable to delete exam.");
+                button.disabled = false;
+                button.textContent = "Delete";
+            }
+        }
+    }
+
+    // ==========================================
+    // START
+    // ==========================================
+
+    loadUsers();
+    loadAnnouncements();
+    loadExams();
+</script>
+
+</body>
+</html>

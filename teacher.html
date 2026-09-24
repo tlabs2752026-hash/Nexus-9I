@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus 9I — Teacher</title>
+    <link rel="icon" href="logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:"Inter",sans-serif;background:#f5f7fb;color:#17284d;min-height:100vh}
+        header{height:76px;background:#fff;border-bottom:1px solid #e7ebf3;display:flex;align-items:center;justify-content:space-between;padding:0 6%}
+        .brand{display:flex;align-items:center;gap:12px}
+        .brand img{width:42px;height:42px;object-fit:contain}
+        .brand h2{font-size:20px;font-weight:800}
+        .brand p{font-size:11px;color:#7b8498;margin-top:2px}
+        .role{font-size:13px;font-weight:600;color:#315eba;background:#edf3ff;padding:9px 14px;border-radius:20px}
+        main{width:min(1150px,90%);margin:35px auto 60px}
+        .welcome{background:linear-gradient(135deg,#315eba,#17284d);border-radius:24px;padding:38px;color:#fff;box-shadow:0 15px 35px rgba(23,40,77,.15)}
+        .welcome small{font-size:12px;font-weight:700;letter-spacing:1px;opacity:.75;text-transform:uppercase}
+        .welcome h1{margin-top:10px;font-size:clamp(28px,5vw,42px);line-height:1.1}
+        .welcome p{margin-top:12px;font-size:14px;opacity:.82;line-height:1.6}
+        .section{margin-top:28px}
+        .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+        .section-title h2{font-size:19px}
+        .section-title span{font-size:12px;color:#8992a5}
+        .panel{background:#fff;border:1px solid #e7ebf3;border-radius:18px;padding:22px}
+        .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+        .field{display:flex;flex-direction:column;gap:6px}
+        .field.full{grid-column:1/-1}
+        label{font-size:12px;font-weight:700;color:#536079}
+        input,textarea{width:100%;border:1px solid #dfe4ed;border-radius:11px;padding:12px 13px;font-family:inherit;font-size:13px;outline:none;background:#fff}
+        input:focus,textarea:focus{border-color:#315eba}
+        textarea{min-height:110px;resize:vertical}
+        .button-row{display:flex;gap:10px;margin-top:15px;flex-wrap:wrap}
+        button{border:0;border-radius:11px;padding:11px 17px;font-family:inherit;font-weight:700;cursor:pointer}
+        .primary{background:#315eba;color:#fff}
+        .primary:hover{background:#274d9d}
+        .secondary{background:#edf3ff;color:#315eba}
+        button:disabled{opacity:.6;cursor:not-allowed}
+        .message{display:none;margin-top:12px;padding:11px 13px;border-radius:10px;font-size:12px}
+        .success{display:block;background:#ecfdf3;color:#067647}
+        .failure{display:block;background:#fef3f2;color:#b42318}
+        .list{background:#fff;border:1px solid #e7ebf3;border-radius:18px;padding:8px}
+        .item{padding:18px;border-bottom:1px solid #edf0f5}
+        .item:last-child{border-bottom:0}
+        .item-top{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}
+        .item h3{font-size:15px;margin-bottom:7px}
+        .item p{font-size:13px;color:#687286;line-height:1.55}
+        .meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+        .meta span{font-size:10px;color:#315eba;background:#edf3ff;padding:5px 8px;border-radius:7px;font-weight:600}
+        .delete{background:#fff0ef;color:#b42318;padding:7px 10px;font-size:11px;white-space:nowrap}
+        .delete:hover{background:#ffe3e0}
+        .exams{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:15px}
+        .exam{background:#fff;border:1px solid #e7ebf3;border-radius:18px;padding:20px}
+        .exam-date{font-size:12px;font-weight:700;color:#315eba;margin-bottom:10px}
+        .exam h3{font-size:16px;margin-bottom:7px}
+        .exam p{font-size:12px;color:#7c8496;line-height:1.7}
+        .empty{text-align:center;padding:25px;color:#8a92a3;font-size:13px}
+        .error{color:#b42318}
+        footer{text-align:center;color:#9aa2b2;font-size:11px;padding:25px}
+        @media(max-width:650px){
+            header{padding:0 5%}
+            main{width:92%}
+            .welcome{padding:27px}
+            .form-grid{grid-template-columns:1fr}
+            .field.full{grid-column:auto}
+            .item-top{flex-direction:column}
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="brand">
+        <img src="logo.png" alt="Nexus 9I">
+        <div>
+            <h2>Nexus 9I</h2>
+            <p>Class 9I Portal</p>
+        </div>
+    </div>
+    <div class="role">Teacher</div>
+</header>
+
+<main>
+    <section class="welcome">
+        <small>Teacher Portal</small>
+        <h1 id="welcomeName">Namaste!</h1>
+        <p id="subjectText">Manage your Class 9I announcements and exams.</p>
+    </section>
+
+    <!-- CREATE ANNOUNCEMENT -->
+    <section class="section">
+        <div class="section-title">
+            <h2>Create Announcement</h2>
+            <span>School-wide</span>
+        </div>
+
+        <div class="panel">
+            <form id="announcementForm">
+                <div class="form-grid">
+                    <div class="field full">
+                        <label for="announcementTitle">Title</label>
+                        <input id="announcementTitle" maxlength="150" required
+                               placeholder="Enter announcement title">
+                    </div>
+
+                    <div class="field full">
+                        <label for="announcementMessage">Message</label>
+                        <textarea id="announcementMessage" maxlength="2000" required
+                                  placeholder="Write the announcement..."></textarea>
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button class="primary" id="announcementButton" type="submit">
+                        Publish Announcement
+                    </button>
+                </div>
+
+                <div id="announcementMessageBox" class="message"></div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ANNOUNCEMENTS -->
+    <section class="section">
+        <div class="section-title">
+            <h2>Announcements</h2>
+            <span>Delete your own posts</span>
+        </div>
+
+        <div id="announcements" class="list">
+            <div class="empty">Loading announcements...</div>
+        </div>
+    </section>
+
+    <!-- CREATE EXAM -->
+    <section class="section">
+        <div class="section-title">
+            <h2>Create Exam</h2>
+            <span>Class 9I</span>
+        </div>
+
+        <div class="panel">
+            <form id="examForm">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="examName">Exam Name</label>
+                        <input id="examName" maxlength="150" required
+                               placeholder="e.g. PA-2">
+                    </div>
+
+                    <div class="field">
+                        <label for="examSubject">Subject</label>
+                        <input id="examSubject" maxlength="100" required
+                               placeholder="e.g. Mathematics">
+                    </div>
+
+                    <div class="field">
+                        <label for="examDate">Date</label>
+                        <input id="examDate" type="date" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="examTime">Time</label>
+                        <input id="examTime" type="time" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="maxMarks">Maximum Marks</label>
+                        <input id="maxMarks" type="number" min="1" step="1" required
+                               placeholder="e.g. 25">
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button class="primary" id="examButton" type="submit">
+                        Create Exam
+                    </button>
+                </div>
+
+                <div id="examMessageBox" class="message"></div>
+            </form>
+        </div>
+    </section>
+
+    <!-- EXAMS -->
+    <section class="section">
+        <div class="section-title">
+            <h2>Exams</h2>
+            <span>Delete your own exams</span>
+        </div>
+
+        <div id="exams" class="exams">
+            <div class="empty">Loading exams...</div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    © 2026 Nexus 9I • Class 9I Portal
+</footer>
+
+<script>
+    // ==========================================
+    // AUTH
+    // ==========================================
+
+    const token =
+        localStorage.getItem("nexusToken") ||
+        sessionStorage.getItem("nexusToken");
+
+    const storedUserRaw =
+        localStorage.getItem("nexusUser") ||
+        sessionStorage.getItem("nexusUser");
+
+    let storedUser = {};
+
+    try {
+        storedUser = JSON.parse(storedUserRaw || "{}");
+    } catch {
+        storedUser = {};
+    }
+
+    if (!token) {
+        window.location.href = "/login.html";
+    }
+
+    if (storedUser.role && storedUser.role !== "teacher") {
+        if (storedUser.role === "student") {
+            window.location.href = "/student.html";
+        } else if (storedUser.role === "admin") {
+            window.location.href = "/admin.html";
+        } else {
+            window.location.href = "/login.html";
+        }
+    }
+
+    // ==========================================
+    // HELPERS
+    // ==========================================
+
+    function escapeHTML(value) {
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    function formatDate(value) {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "Date unavailable";
+
+        return date.toLocaleDateString("en-IN", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        });
+    }
+
+    function formatDateTime(value) {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "";
+
+        return date.toLocaleString("en-IN", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+    }
+
+    function authHeaders(extra = {}) {
+        return {
+            ...extra,
+            Authorization: `Bearer ${token}`
+        };
+    }
+
+    function showMessage(elementId, text, success) {
+        const box = document.getElementById(elementId);
+        box.textContent = text;
+        box.className =
+            `message ${success ? "success" : "failure"}`;
+    }
+
+    function handleAuthFailure() {
+        localStorage.removeItem("nexusToken");
+        localStorage.removeItem("nexusUser");
+        sessionStorage.removeItem("nexusToken");
+        sessionStorage.removeItem("nexusUser");
+        window.location.href = "/login.html";
+    }
+
+    async function readResponse(response) {
+        let data = {};
+
+        try {
+            data = await response.json();
+        } catch {
+            data = {};
+        }
+
+        if (response.status === 401 || response.status === 403) {
+            handleAuthFailure();
+            throw new Error("Authentication expired.");
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                data.message || "Request failed."
+            );
+        }
+
+        return data;
+    }
+
+    // ==========================================
+    // HEADER
+    // ==========================================
+
+    document.getElementById("welcomeName").textContent =
+        `Namaste, ${storedUser.name || "Teacher"}!`;
+
+    document.getElementById("subjectText").textContent =
+        storedUser.subject
+            ? `Subject: ${storedUser.subject} • Manage your Class 9I announcements and exams.`
+            : "Manage your Class 9I announcements and exams.";
+
+    // ==========================================
+    // ANNOUNCEMENTS
+    // ==========================================
+
+    async function loadAnnouncements() {
+        const container =
+            document.getElementById("announcements");
+
+        try {
+            const response = await fetch(
+                "/api/announcements",
+                {
+                    headers: authHeaders()
+                }
+            );
+
+            const data = await readResponse(response);
+            const announcements = data.announcements || [];
+
+            if (!announcements.length) {
+                container.innerHTML = `
+                    <div class="empty">
+                        No announcements yet.
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML =
+                announcements.map(item => {
+                    const canDelete =
+                        storedUser.userId &&
+                        item.authorId === storedUser.userId;
+
+                    return `
+                        <article class="item">
+                            <div class="item-top">
+                                <div>
+                                    <h3>${escapeHTML(item.title)}</h3>
+                                    <p>${escapeHTML(item.message)}</p>
+
+                                    <div class="meta">
+                                        <span>
+                                            ${escapeHTML(item.authorName || "Teacher")}
+                                        </span>
+                                        <span>
+                                            ${formatDateTime(item.createdAt)}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                ${
+                                    canDelete
+                                        ? `<button
+                                            class="delete"
+                                            type="button"
+                                            data-type="announcement"
+                                            data-id="${escapeHTML(item._id)}">
+                                            Delete
+                                           </button>`
+                                        : ""
+                                }
+                            </div>
+                        </article>
+                    `;
+                }).join("");
+
+        } catch (error) {
+            console.error(error);
+
+            if (error.message !== "Authentication expired.") {
+                container.innerHTML = `
+                    <div class="empty error">
+                        Unable to load announcements.
+                    </div>
+                `;
+            }
+        }
+    }
+
+    document.getElementById("announcementForm")
+        .addEventListener("submit", async event => {
+            event.preventDefault();
+
+            const button =
+                document.getElementById("announcementButton");
+
+            const title =
+                document.getElementById("announcementTitle")
+                    .value.trim();
+
+            const message =
+                document.getElementById("announcementMessage")
+                    .value.trim();
+
+            if (!title || !message) return;
+
+            button.disabled = true;
+            button.textContent = "Publishing...";
+
+            try {
+                const response = await fetch(
+                    "/api/announcements",
+                    {
+                        method: "POST",
+                        headers: authHeaders({
+                            "Content-Type": "application/json"
+                        }),
+                        body: JSON.stringify({
+                            title,
+                            message
+                        })
+                    }
+                );
+
+                await readResponse(response);
+
+                document.getElementById("announcementForm").reset();
+
+                showMessage(
+                    "announcementMessageBox",
+                    "Announcement published successfully.",
+                    true
+                );
+
+                await loadAnnouncements();
+
+            } catch (error) {
+                if (error.message !== "Authentication expired.") {
+                    showMessage(
+                        "announcementMessageBox",
+                        error.message,
+                        false
+                    );
+                }
+            } finally {
+                button.disabled = false;
+                button.textContent = "Publish Announcement";
+            }
+        });
+
+    // ==========================================
+    // EXAMS
+    // ==========================================
+
+    async function loadExams() {
+        const container =
+            document.getElementById("exams");
+
+        try {
+            const response = await fetch(
+                "/api/exams",
+                {
+                    headers: authHeaders()
+                }
+            );
+
+            const data = await readResponse(response);
+            const exams = data.exams || [];
+
+            if (!exams.length) {
+                container.innerHTML = `
+                    <div class="empty">
+                        No exams scheduled.
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML =
+                exams.map(exam => {
+                    const canDelete =
+                        storedUser.userId &&
+                        exam.createdBy === storedUser.userId;
+
+                    return `
+                        <article class="exam">
+                            <div class="exam-date">
+                                ${formatDate(exam.examDate)}
+                            </div>
+
+                            <div class="item-top">
+                                <div>
+                                    <h3>
+                                        ${escapeHTML(exam.name || "Exam")}
+                                    </h3>
+
+                                    <p>
+                                        <strong>Subject:</strong>
+                                        ${escapeHTML(exam.subject)}
+                                    </p>
+
+                                    <p>
+                                        <strong>Time:</strong>
+                                        ${escapeHTML(exam.examTime)}
+                                    </p>
+
+                                    <p>
+                                        <strong>Maximum Marks:</strong>
+                                        ${escapeHTML(exam.maxMarks)}
+                                    </p>
+
+                                    <div class="meta">
+                                        <span>
+                                            ${escapeHTML(exam.createdByName || "Teacher")}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                ${
+                                    canDelete
+                                        ? `<button
+                                            class="delete"
+                                            type="button"
+                                            data-type="exam"
+                                            data-id="${escapeHTML(exam._id)}">
+                                            Delete
+                                           </button>`
+                                        : ""
+                                }
+                            </div>
+                        </article>
+                    `;
+                }).join("");
+
+        } catch (error) {
+            console.error(error);
+
+            if (error.message !== "Authentication expired.") {
+                container.innerHTML = `
+                    <div class="empty error">
+                        Unable to load exams.
+                    </div>
+                `;
+            }
+        }
+    }
+
+    document.getElementById("examForm")
+        .addEventListener("submit", async event => {
+            event.preventDefault();
+
+            const button =
+                document.getElementById("examButton");
+
+            const name =
+                document.getElementById("examName")
+                    .value.trim();
+
+            const subject =
+                document.getElementById("examSubject")
+                    .value.trim();
+
+            const examDate =
+                document.getElementById("examDate").value;
+
+            const examTime =
+                document.getElementById("examTime").value;
+
+            const maxMarks =
+                document.getElementById("maxMarks").value;
+
+            if (
+                !name ||
+                !subject ||
+                !examDate ||
+                !examTime ||
+                !maxMarks
+            ) {
+                return;
+            }
+
+            button.disabled = true;
+            button.textContent = "Creating...";
+
+            try {
+                const response = await fetch(
+                    "/api/exams",
+                    {
+                        method: "POST",
+                        headers: authHeaders({
+                            "Content-Type": "application/json"
+                        }),
+                        body: JSON.stringify({
+                            name,
+                            subject,
+                            examDate,
+                            examTime,
+                            maxMarks: Number(maxMarks)
+                        })
+                    }
+                );
+
+                await readResponse(response);
+
+                document.getElementById("examForm").reset();
+
+                showMessage(
+                    "examMessageBox",
+                    "Exam created successfully.",
+                    true
+                );
+
+                await loadExams();
+
+            } catch (error) {
+                if (error.message !== "Authentication expired.") {
+                    showMessage(
+                        "examMessageBox",
+                        error.message,
+                        false
+                    );
+                }
+            } finally {
+                button.disabled = false;
+                button.textContent = "Create Exam";
+            }
+        });
+
+    // ==========================================
+    // DELETE OWN ANNOUNCEMENT / EXAM
+    // ==========================================
+
+    document.addEventListener("click", async event => {
+        const button =
+            event.target.closest(".delete");
+
+        if (!button) return;
+
+        const type = button.dataset.type;
+        const id = button.dataset.id;
+
+        if (!type || !id) return;
+
+        const label =
+            type === "announcement"
+                ? "announcement"
+                : "exam";
+
+        const confirmed =
+            window.confirm(
+                `Delete this ${label}?`
+            );
+
+        if (!confirmed) return;
+
+        button.disabled = true;
+        button.textContent = "Deleting...";
+
+        try {
+            const endpoint =
+                type === "announcement"
+                    ? `/api/announcements/${encodeURIComponent(id)}`
+                    : `/api/exams/${encodeURIComponent(id)}`;
+
+            const response = await fetch(
+                endpoint,
+                {
+                    method: "DELETE",
+                    headers: authHeaders()
+                }
+            );
+
+            await readResponse(response);
+
+            if (type === "announcement") {
+                await loadAnnouncements();
+            } else {
+                await loadExams();
+            }
+
+        } catch (error) {
+            console.error(error);
+
+            if (error.message !== "Authentication expired.") {
+                alert(
+                    error.message ||
+                    `Unable to delete ${label}.`
+                );
+
+                button.disabled = false;
+                button.textContent = "Delete";
+            }
+        }
+    });
+
+    // ==========================================
+    // START
+    // ==========================================
+
+    loadAnnouncements();
+    loadExams();
+</script>
+
+</body>
+</html>

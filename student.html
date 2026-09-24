@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus 9I — Student</title>
+    <link rel="icon" href="/logo.png">
+    <style>
+        * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #315eba;
+    --primary-dark: #17284d;
+    --primary-soft: #edf3ff;
+    --page: #f5f7fb;
+    --border: #e7ebf3;
+    --text: #17284d;
+    --muted: #748097;
+    --danger: #b42318;
+    --success: #067647;
+    --white: #ffffff;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--page);
+    color: var(--text);
+    font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+button,
+textarea {
+    font: inherit;
+}
+
+button {
+    border: 0;
+}
+
+.topbar {
+    min-height: 76px;
+    padding: 0 6%;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+}
+
+.brand h2 {
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.brand p {
+    margin-top: 3px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.role {
+    color: var(--primary);
+    background: var(--primary-soft);
+    padding: 9px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.logout-button {
+    padding: 9px 14px;
+    border-radius: 10px;
+    background: #fff0ef;
+    color: var(--danger);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background: #ffe3e0;
+}
+
+.page {
+    width: min(1150px, 90%);
+    margin: 35px auto 60px;
+}
+
+.welcome-card {
+    padding: 38px;
+    border-radius: 24px;
+    color: white;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    box-shadow: 0 15px 35px rgba(23, 40, 77, 0.15);
+}
+
+.welcome-card small {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: .78;
+}
+
+.welcome-card h1 {
+    margin-top: 10px;
+    font-size: clamp(28px, 5vw, 42px);
+    line-height: 1.1;
+}
+
+.welcome-card p {
+    max-width: 720px;
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.65;
+    opacity: .85;
+}
+
+.section {
+    margin-top: 30px;
+}
+
+.section-title {
+    margin-bottom: 14px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.section-title h2 {
+    font-size: 19px;
+}
+
+.section-title p {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.section-title > span {
+    color: #8992a5;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.announcements {
+    overflow: hidden;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+}
+
+.announcement {
+    padding: 18px;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.announcement:last-child {
+    border-bottom: 0;
+}
+
+.announcement h3 {
+    margin-bottom: 7px;
+    font-size: 15px;
+}
+
+.announcement p {
+    color: #687286;
+    font-size: 13px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.announcement-meta {
+    margin-top: 11px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.meta-pill {
+    padding: 5px 8px;
+    border-radius: 7px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.exams {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 15px;
+}
+
+.exam {
+    padding: 20px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+}
+
+.exam-date {
+    margin-bottom: 10px;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.exam h3 {
+    margin-bottom: 9px;
+    font-size: 16px;
+}
+
+.exam p {
+    color: #7c8496;
+    font-size: 12px;
+    line-height: 1.75;
+}
+
+.exam strong {
+    color: #586277;
+}
+
+.empty {
+    padding: 28px;
+    color: #8a92a3;
+    text-align: center;
+    font-size: 13px;
+}
+
+.empty.error {
+    color: var(--danger);
+}
+
+.ai-box {
+    margin-top: 30px;
+    padding: 22px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+}
+
+.ai-heading {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ai-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.ai-heading h2 {
+    font-size: 17px;
+}
+
+.ai-heading p {
+    margin-top: 3px;
+    color: #8992a5;
+    font-size: 11px;
+}
+
+.ai-form {
+    display: flex;
+    gap: 10px;
+}
+
+.ai-form textarea {
+    flex: 1;
+    min-height: 58px;
+    max-height: 220px;
+    resize: vertical;
+    padding: 14px;
+    border: 1px solid #dfe4ed;
+    border-radius: 12px;
+    outline: none;
+    background: white;
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.ai-form textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(49, 94, 186, .08);
+}
+
+.ai-form button {
+    min-width: 145px;
+    align-self: stretch;
+    padding: 0 20px;
+    border-radius: 12px;
+    background: var(--primary);
+    color: white;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.ai-form button:hover {
+    background: #274d9d;
+}
+
+.ai-form button:disabled {
+    opacity: .65;
+    cursor: wait;
+}
+
+.ai-answer {
+    display: none;
+    margin-top: 16px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #f5f7fb;
+    font-size: 13px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+.ai-answer.visible {
+    display: block;
+}
+
+.ai-answer-title {
+    margin-bottom: 8px;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+footer {
+    padding: 25px;
+    color: #9aa2b2;
+    text-align: center;
+    font-size: 11px;
+}
+
+@media (max-width: 700px) {
+    .topbar {
+        padding: 12px 5%;
+        align-items: flex-start;
+    }
+
+    .header-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .role,
+    .logout-button {
+        text-align: center;
+    }
+
+    .page {
+        width: 92%;
+        margin-top: 24px;
+    }
+
+    .welcome-card {
+        padding: 28px;
+        border-radius: 20px;
+    }
+
+    .section-title {
+        align-items: flex-start;
+    }
+
+    .ai-form {
+        flex-direction: column;
+    }
+
+    .ai-form button {
+        min-height: 48px;
+    }
+}
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <img src="/logo.png" alt="Nexus 9I logo">
+            <div>
+                <h2>Nexus 9I</h2>
+                <p>Class 9I Portal</p>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <span class="role">Student</span>
+            <button id="logoutButton" class="logout-button" type="button">Logout</button>
+        </div>
+    </header>
+
+    <main class="page">
+        <section class="welcome-card">
+            <div>
+                <small>Student Portal</small>
+                <h1 id="welcomeName">Namaste!</h1>
+                <p>Welcome to Nexus 9I. Your announcements, exams and learning tools are all in one place.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-title">
+                <div>
+                    <h2>Recent Announcements</h2>
+                    <p>Important updates for Class 9I</p>
+                </div>
+                <span>9I Updates</span>
+            </div>
+
+            <div id="announcements" class="announcements" aria-live="polite">
+                <div class="empty">Loading announcements...</div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-title">
+                <div>
+                    <h2>Upcoming Exams</h2>
+                    <p>Check your scheduled examinations</p>
+                </div>
+                <span>Class 9I</span>
+            </div>
+
+            <div id="exams" class="exams" aria-live="polite">
+                <div class="empty">Loading exams...</div>
+            </div>
+        </section>
+
+        <section class="ai-box">
+            <div class="ai-heading">
+                <div class="ai-icon">✦</div>
+                <div>
+                    <h2>Nexus AI</h2>
+                    <p>Powered by Gemini • Ask a doubt about your studies</p>
+                </div>
+            </div>
+
+            <div class="ai-form">
+                <textarea
+                    id="question"
+                    maxlength="4000"
+                    placeholder="Ask Nexus AI your question..."
+                    aria-label="Ask Nexus AI a question"
+                ></textarea>
+
+                <button id="askButton" type="button">Ask Nexus AI</button>
+            </div>
+
+            <div id="aiAnswer" class="ai-answer" aria-live="polite">
+                <div class="ai-answer-title">Nexus AI</div>
+                <div id="aiAnswerText">Ask a question to get started.</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        © 2026 Nexus 9I • Class 9I Portal
+    </footer>
+
+    <script>
+        // ============================================================
+// NEXUS 9I - STUDENT.JS
+// ============================================================
+// Student portal frontend
+// Backend: Node.js + Express + MongoDB
+// AI: Nexus AI / Gemini
+// ============================================================
+
+
+// ============================================================
+// AUTHENTICATION
+// ============================================================
+
+function getToken() {
+    return (
+        localStorage.getItem("nexusToken") ||
+        sessionStorage.getItem("nexusToken") ||
+        ""
+    );
+}
+
+function getStoredUser() {
+    try {
+        const raw =
+            localStorage.getItem("nexusUser") ||
+            sessionStorage.getItem("nexusUser");
+
+        if (!raw) return null;
+
+        return JSON.parse(raw);
+    } catch (error) {
+        console.error("Failed to read nexusUser:", error);
+        return null;
+    }
+}
+
+function authHeaders(extra = {}) {
+    const token = getToken();
+
+    return {
+        ...extra,
+        "Authorization": `Bearer ${token}`
+    };
+}
+
+function clearAuthentication() {
+    localStorage.removeItem("nexusToken");
+    localStorage.removeItem("nexusUser");
+
+    sessionStorage.removeItem("nexusToken");
+    sessionStorage.removeItem("nexusUser");
+}
+
+function handleAuthFailure() {
+    clearAuthentication();
+    window.location.href = "/login.html";
+}
+
+
+// ============================================================
+// SECURITY / HTML ESCAPING
+// ============================================================
+
+function escapeHTML(value) {
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+// ============================================================
+// DATE / TIME
+// ============================================================
+
+function formatDate(value) {
+    if (!value) {
+        return "Date unavailable";
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return escapeHTML(value);
+    }
+
+    return date.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
+}
+
+function formatDateTime(value) {
+    if (!value) {
+        return "";
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return "";
+    }
+
+    return date.toLocaleString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+
+
+// ============================================================
+// LOAD STUDENT INFORMATION
+// ============================================================
+
+function loadStudent() {
+    const user = getStoredUser();
+
+    if (!user) {
+        return;
+    }
+
+    const welcomeName =
+        document.getElementById("welcomeName");
+
+    if (welcomeName) {
+        welcomeName.textContent =
+            `Namaste, ${user.name || "Student"}!`;
+    }
+
+    const studentName =
+        document.getElementById("studentName");
+
+    if (studentName) {
+        studentName.textContent =
+            user.name || "Student";
+    }
+
+    const studentId =
+        document.getElementById("studentId");
+
+    if (studentId) {
+        studentId.textContent =
+            user.userId || "";
+    }
+
+    const studentClass =
+        document.getElementById("studentClass");
+
+    if (studentClass) {
+        studentClass.textContent =
+            user.className || "9I";
+    }
+
+    const studentRoll =
+        document.getElementById("studentRollNo");
+
+    if (studentRoll) {
+        studentRoll.textContent =
+            user.rollNo ?? "";
+    }
+}
+
+
+// ============================================================
+// ANNOUNCEMENTS
+// ============================================================
+
+async function loadAnnouncements() {
+
+    const container =
+        document.getElementById("announcements");
+
+    if (!container) {
+        console.warn(
+            "Announcements container not found."
+        );
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "/api/announcements",
+            {
+                method: "GET",
+                headers: authHeaders()
+            }
+        );
+
+        if (
+            response.status === 401 ||
+            response.status === 403
+        ) {
+            handleAuthFailure();
+            return;
+        }
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message ||
+                "Failed to load announcements."
+            );
+        }
+
+        const announcements =
+            Array.isArray(data)
+                ? data
+                : Array.isArray(data.announcements)
+                    ? data.announcements
+                    : [];
+
+        if (announcements.length === 0) {
+
+            container.innerHTML = `
+                <div class="empty">
+                    No announcements yet.
+                </div>
+            `;
+
+            return;
+        }
+
+        container.innerHTML =
+            announcements.map(item => `
+
+                <article class="announcement">
+
+                    <h3>
+                        ${escapeHTML(
+                            item.title ||
+                            "Announcement"
+                        )}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(
+                            item.message ||
+                            ""
+                        )}
+                    </p>
+
+                    <div class="announcement-meta">
+
+                        <span>
+                            ${escapeHTML(
+                                item.authorName ||
+                                "School"
+                            )}
+                        </span>
+
+                        <span>
+                            ${formatDateTime(
+                                item.createdAt
+                            )}
+                        </span>
+
+                    </div>
+
+                </article>
+
+            `).join("");
+
+    } catch (error) {
+
+        console.error(
+            "Announcements error:",
+            error
+        );
+
+        container.innerHTML = `
+            <div class="empty error">
+                Unable to load announcements.
+            </div>
+        `;
+    }
+}
+
+
+// ============================================================
+// EXAMS
+// ============================================================
+
+async function loadExams() {
+
+    const container =
+        document.getElementById("exams");
+
+    if (!container) {
+        console.warn(
+            "Exams container not found."
+        );
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "/api/exams",
+            {
+                method: "GET",
+                headers: authHeaders()
+            }
+        );
+
+        if (
+            response.status === 401 ||
+            response.status === 403
+        ) {
+            handleAuthFailure();
+            return;
+        }
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message ||
+                "Failed to load exams."
+            );
+        }
+
+        const exams =
+            Array.isArray(data)
+                ? data
+                : Array.isArray(data.exams)
+                    ? data.exams
+                    : [];
+
+        if (exams.length === 0) {
+
+            container.innerHTML = `
+                <div class="empty">
+                    No upcoming exams.
+                </div>
+            `;
+
+            return;
+        }
+
+        container.innerHTML =
+            exams.map(exam => `
+
+                <article class="exam">
+
+                    <div class="exam-date">
+                        ${formatDate(
+                            exam.examDate
+                        )}
+                    </div>
+
+                    <h3>
+                        ${escapeHTML(
+                            exam.name ||
+                            "Exam"
+                        )}
+                    </h3>
+
+                    <p>
+                        <strong>Subject:</strong>
+                        ${escapeHTML(
+                            exam.subject ||
+                            "Not specified"
+                        )}
+                    </p>
+
+                    <p>
+                        <strong>Time:</strong>
+                        ${escapeHTML(
+                            exam.examTime ||
+                            "Not specified"
+                        )}
+                    </p>
+
+                    <p>
+                        <strong>Maximum Marks:</strong>
+                        ${escapeHTML(
+                            exam.maxMarks ??
+                            "Not specified"
+                        )}
+                    </p>
+
+                </article>
+
+            `).join("");
+
+    } catch (error) {
+
+        console.error(
+            "Exams error:",
+            error
+        );
+
+        container.innerHTML = `
+            <div class="empty error">
+                Unable to load exams.
+            </div>
+        `;
+    }
+}
+
+
+// ============================================================
+// NEXUS AI
+// ============================================================
+
+async function askAI() {
+
+    const input =
+        document.getElementById("question") ||
+        document.getElementById("aiQuestion") ||
+        document.getElementById("doubt");
+
+    const answerBox =
+        document.getElementById("aiAnswer") ||
+        document.getElementById("answer") ||
+        document.getElementById("aiResponse");
+
+    const button =
+        document.getElementById("askButton") ||
+        document.getElementById("askAIButton") ||
+        document.getElementById("askNexusAI");
+
+    if (!input) {
+
+        console.error(
+            "Nexus AI input box not found."
+        );
+
+        return;
+    }
+
+    if (!answerBox) {
+
+        console.error(
+            "Nexus AI answer box not found."
+        );
+
+        return;
+    }
+
+    const question =
+        input.value.trim();
+
+    if (!question) {
+
+        answerBox.style.display = "block";
+
+        answerBox.textContent =
+            "Please enter your question.";
+
+        return;
+    }
+
+    // Show loading state
+    answerBox.style.display = "block";
+
+    answerBox.textContent =
+        "Nexus AI is thinking...";
+
+    if (button) {
+        button.disabled = true;
+        button.textContent = "Thinking...";
+    }
+
+    try {
+
+        const response = await fetch(
+            "/api/ai/doubt",
+            {
+                method: "POST",
+
+                headers: authHeaders({
+                    "Content-Type":
+                        "application/json"
+                }),
+
+                body: JSON.stringify({
+                    question: question
+                })
+            }
+        );
+
+        if (
+            response.status === 401 ||
+            response.status === 403
+        ) {
+            handleAuthFailure();
+            return;
+        }
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Nexus AI request failed."
+            );
+        }
+
+        if (!data.answer) {
+
+            throw new Error(
+                "Nexus AI returned an empty answer."
+            );
+        }
+
+        answerBox.textContent =
+            data.answer;
+
+    } catch (error) {
+
+        console.error(
+            "Nexus AI error:",
+            error
+        );
+
+        answerBox.textContent =
+            "Sorry, Nexus AI is currently unavailable. Please try again.";
+
+    } finally {
+
+        if (button) {
+            button.disabled = false;
+            button.textContent =
+                "Ask Nexus AI";
+        }
+    }
+}
+
+
+// ============================================================
+// NEXUS AI BUTTON
+// ============================================================
+
+function setupAIButton() {
+
+    const button =
+        document.getElementById("askButton") ||
+        document.getElementById("askAIButton") ||
+        document.getElementById("askNexusAI");
+
+    if (!button) {
+
+        console.error(
+            "Ask Nexus AI button not found."
+        );
+
+        return;
+    }
+
+    // Prevent duplicate event listeners
+    button.addEventListener(
+        "click",
+        askAI
+    );
+
+    console.log(
+        "Nexus AI button connected successfully."
+    );
+}
+
+
+// ============================================================
+// NEXUS AI KEYBOARD INPUT
+// ============================================================
+
+function setupAIInput() {
+
+    const input =
+        document.getElementById("question") ||
+        document.getElementById("aiQuestion") ||
+        document.getElementById("doubt");
+
+    if (!input) {
+        return;
+    }
+
+    input.addEventListener(
+        "keydown",
+        event => {
+
+            // Enter = ask
+            // Shift + Enter = new line
+
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                askAI();
+            }
+        }
+    );
+}
+
+
+// ============================================================
+// LOGOUT
+// ============================================================
+
+function logout() {
+
+    clearAuthentication();
+
+    window.location.href =
+        "/login.html";
+}
+
+function setupLogout() {
+
+    const buttons =
+        document.querySelectorAll(
+            "#logout, #logoutBtn, .logout-btn"
+        );
+
+    buttons.forEach(button => {
+
+        button.addEventListener(
+            "click",
+            logout
+        );
+
+    });
+}
+
+
+// ============================================================
+// ROLE CHECK
+// ============================================================
+
+function verifyStudentRole() {
+
+    const user =
+        getStoredUser();
+
+    if (!user) {
+
+        handleAuthFailure();
+
+        return false;
+    }
+
+    if (
+        user.role &&
+        String(user.role).toLowerCase() !==
+            "student"
+    ) {
+
+        console.warn(
+            "This account is not a student account."
+        );
+
+        clearAuthentication();
+
+        window.location.href =
+            "/login.html";
+
+        return false;
+    }
+
+    return true;
+}
+
+
+// ============================================================
+// INITIALIZE STUDENT PORTAL
+// ============================================================
+
+async function initializeStudentPortal() {
+
+    console.log(
+        "================================="
+    );
+
+    console.log(
+        "NEXUS 9I STUDENT PORTAL"
+    );
+
+    console.log(
+        "================================="
+    );
+
+    const token =
+        getToken();
+
+    if (!token) {
+
+        console.warn(
+            "No nexusToken found."
+        );
+
+        window.location.href =
+            "/login.html";
+
+        return;
+    }
+
+    if (!verifyStudentRole()) {
+        return;
+    }
+
+    loadStudent();
+
+    setupAIButton();
+
+    setupAIInput();
+
+    setupLogout();
+
+    await Promise.all([
+        loadAnnouncements(),
+        loadExams()
+    ]);
+
+    console.log(
+        "Nexus 9I student portal loaded successfully."
+    );
+}
+
+
+// ============================================================
+// START
+// ============================================================
+
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeStudentPortal
+    );
+
+} else {
+
+    initializeStudentPortal();
+}
+    </script>
+</body>
+</html>
