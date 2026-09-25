@@ -491,11 +491,75 @@
             }
         }
 
+
+        /* =====================================================
+           PAGE LOADER
+        ===================================================== */
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 18px;
+            background: #06244a;
+            color: #ffffff;
+            transition: opacity 0.45s ease, visibility 0.45s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loader-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(255, 255, 255, 0.22);
+            border-top-color: #1685ff;
+            border-radius: 50%;
+            animation: nexusSpin 0.85s linear infinite;
+        }
+
+        .loader-title {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .loader-text {
+            margin-top: -10px;
+            font-size: 12px;
+            color: #b9d7f5;
+        }
+
+        @keyframes nexusSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
     </style>
 </head>
 
 
 <body>
+
+    <!-- =====================================================
+         PAGE LOADER
+    ===================================================== -->
+
+    <div class="page-loader" id="pageLoader" aria-label="Loading Nexus 9I">
+        <div class="loader-spinner"></div>
+        <div class="loader-title">Nexus 9I</div>
+        <div class="loader-text">Loading portal...</div>
+    </div>
+
+
 
 
     <!-- =====================================================
@@ -540,7 +604,7 @@
             <!-- GROUP PHOTO -->
 
             <img
-                src="group.jpeg"
+                src="group.jpg"
                 alt="Nexus 9I Class Group Photo"
                 class="group-photo"
             >
