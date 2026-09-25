@@ -208,6 +208,12 @@
 
 <script>
     // ==========================================
+    // API CONFIGURATION
+    // ==========================================
+
+    const API_BASE = "https://nexus-9i.onrender.com";
+
+    // ==========================================
     // AUTH
     // ==========================================
 
@@ -344,8 +350,7 @@
             document.getElementById("announcements");
 
         try {
-            const response = await fetch(
-                "/api/announcements",
+            const response = await fetch(`${API_BASE}/api/announcements`,
                 {
                     headers: authHeaders()
                 }
@@ -436,8 +441,7 @@
             button.textContent = "Publishing...";
 
             try {
-                const response = await fetch(
-                    "/api/announcements",
+                const response = await fetch(`${API_BASE}/api/announcements`,
                     {
                         method: "POST",
                         headers: authHeaders({
@@ -485,8 +489,7 @@
             document.getElementById("exams");
 
         try {
-            const response = await fetch(
-                "/api/exams",
+            const response = await fetch(`${API_BASE}/api/exams`,
                 {
                     headers: authHeaders()
                 }
@@ -611,8 +614,7 @@
             button.textContent = "Creating...";
 
             try {
-                const response = await fetch(
-                    "/api/exams",
+                const response = await fetch(`${API_BASE}/api/exams`,
                     {
                         method: "POST",
                         headers: authHeaders({
@@ -687,8 +689,8 @@
         try {
             const endpoint =
                 type === "announcement"
-                    ? `/api/announcements/${encodeURIComponent(id)}`
-                    : `/api/exams/${encodeURIComponent(id)}`;
+                    ? `${API_BASE}/api/announcements/${encodeURIComponent(id)}`
+                    : `${API_BASE}/api/exams/${encodeURIComponent(id)}`;
 
             const response = await fetch(
                 endpoint,

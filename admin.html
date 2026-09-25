@@ -279,6 +279,12 @@
 
 <script>
     // ==========================================
+    // API CONFIGURATION
+    // ==========================================
+
+    const API_BASE = "https://nexus-9i.onrender.com";
+
+    // ==========================================
     // AUTH
     // ==========================================
 
@@ -425,7 +431,7 @@
 
         try {
             const response = await fetch(
-                "/api/admin/users",
+                `${API_BASE}/api/admin/users`,
                 { headers: authHeaders() }
             );
 
@@ -614,7 +620,7 @@
 
             try {
                 const response = await fetch(
-                    "/api/admin/users",
+                    `${API_BASE}/api/admin/users`,
                     {
                         method: "POST",
                         headers: authHeaders({
@@ -671,7 +677,7 @@
 
         try {
             const response = await fetch(
-                `/api/admin/users/${encodeURIComponent(role)}/${encodeURIComponent(userId)}`,
+                `${API_BASE}/api/admin/users/${encodeURIComponent(role)}/${encodeURIComponent(userId)}`,
                 {
                     method: "DELETE",
                     headers: authHeaders()
@@ -703,7 +709,7 @@
 
         try {
             const response = await fetch(
-                "/api/announcements",
+                `${API_BASE}/api/announcements`,
                 { headers: authHeaders() }
             );
 
@@ -776,7 +782,7 @@
 
             try {
                 const response = await fetch(
-                    "/api/announcements",
+                    `${API_BASE}/api/announcements`,
                     {
                         method: "POST",
                         headers: authHeaders({
@@ -825,7 +831,7 @@
 
         try {
             const response = await fetch(
-                "/api/exams",
+                `${API_BASE}/api/exams`,
                 { headers: authHeaders() }
             );
 
@@ -929,7 +935,7 @@
 
             try {
                 const response = await fetch(
-                    "/api/exams",
+                    `${API_BASE}/api/exams`,
                     {
                         method: "POST",
                         headers: authHeaders({
@@ -1018,7 +1024,7 @@
 
         try {
             const response = await fetch(
-                `/api/announcements/${encodeURIComponent(id)}`,
+                `${API_BASE}/api/announcements/${encodeURIComponent(id)}`,
                 {
                     method: "DELETE",
                     headers: authHeaders()
@@ -1045,7 +1051,7 @@
 
         try {
             const response = await fetch(
-                `/api/exams/${encodeURIComponent(id)}`,
+                `${API_BASE}/api/exams/${encodeURIComponent(id)}`,
                 {
                     method: "DELETE",
                     headers: authHeaders()

@@ -496,6 +496,9 @@ footer {
 
     <script>
         // ============================================================
+// API CONFIGURATION
+const API_BASE = "https://nexus-9i.onrender.com";
+
 // NEXUS 9I - STUDENT.JS
 // ============================================================
 // Student portal frontend
@@ -686,8 +689,7 @@ async function loadAnnouncements() {
 
     try {
 
-        const response = await fetch(
-            "/api/announcements",
+        const response = await fetch(`${API_BASE}/api/announcements`,
             {
                 method: "GET",
                 headers: authHeaders()
@@ -804,8 +806,7 @@ async function loadExams() {
 
     try {
 
-        const response = await fetch(
-            "/api/exams",
+        const response = await fetch(`${API_BASE}/api/exams`,
             {
                 method: "GET",
                 headers: authHeaders()
@@ -975,8 +976,7 @@ async function askAI() {
 
     try {
 
-        const response = await fetch(
-            "/api/ai/doubt",
+        const response = await fetch(`${API_BASE}/api/ai/doubt`,
             {
                 method: "POST",
 
